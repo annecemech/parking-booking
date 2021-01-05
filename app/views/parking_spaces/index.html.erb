@@ -1,4 +1,26 @@
-<h1>Here are the places</h1>
-<% @parking_spaces.each do |parking_space|  %>
-  <p>Place n°<%= parking_space.id %></p>
+<div class="container">
+  <h1>Here are the places</h1>
+  <div class="form-wrapper" style="width: 400px; margin: 0 auto;">
+    <h2>A quelle date souhaitez-vous réserver une place ?</h2>
+
+    <%= simple_form_for :search, url: parking_spaces_path, method: "get" do |f| %>
+        <%= f.input :booking_date, label: false, required: true, placeholder: "Choisissez une date", input_html: {value: @booking_date, class: 'datepicker'} %>
+        <%= f.submit "Valider", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% @parking_spaces.each_with_index do | parking_space, index|  %>
+  <p>Place n°<%= index + 1 %></p>
+    <% booking = parking_space.bookings.select {|booking| booking.date == @search } %>
+    <% if booking == [] %>
+    <p>La place est libre</p>
+
+    <%= simple_form_for [parking_space, @booking] do |f| %>
+            <%= f.input :date, as: :hidden, input_html: { value: @search} %>
+            <%= f.submit "Book Now", class: "btn button-primary" %>
+    <% end %>
+
+    <% else %>
+    <p>La place est déjà réservée par <%= booking[0].user.first_name %></p>
+    <% end %>
 <% end %>
+</div>
