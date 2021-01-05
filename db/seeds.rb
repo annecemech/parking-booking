@@ -63,13 +63,13 @@ booking2 = Booking.create(
 booking3 = Booking.create(
   date: Date.today + 1,
   user: carine,
-  parking_space: place1
+  parking_space: place2
   )
 
 booking4 = Booking.create(
   date: Date.today + 1,
   user: annececile,
-  parking_space: place2
+  parking_space: place1
   )
 
 puts "Bookings OK"
