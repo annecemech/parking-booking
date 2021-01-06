@@ -2,7 +2,7 @@
   <div class="form-wrapper" style="width: 400px; margin: 0 auto;">
     <h2>A quelle date souhaitez-vous réserver une place ?</h2>
 
-    <%= simple_form_for :search, url: parking_spaces_path, method: "get" do |f| %>
+    <%= simple_form_for :search, url: parking_spaces_path, method: "get", remote: true do |f| %>
         <%= f.input :booking_date, label: false, required: true, placeholder: "Choisissez une date", input_html: {value: @booking_date, class: 'datepicker'} %>
         <%= f.submit "Valider", class: "btn btn-primary" %>
     <% end %>

@@ -5,4 +5,9 @@ Rails.application.routes.draw do
   resources :parking_spaces, only: [:index] do
     resources :bookings, only: [:create]
   end
+
+  namespace :my do
+    resources :bookings, only:[:index, :destroy]
+  end
+
 end
