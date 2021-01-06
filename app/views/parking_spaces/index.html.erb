@@ -1,5 +1,4 @@
 <div class="container">
-  <h1>Here are the places</h1>
   <div class="form-wrapper" style="width: 400px; margin: 0 auto;">
     <h2>A quelle date souhaitez-vous réserver une place ?</h2>
 
@@ -8,19 +7,26 @@
         <%= f.submit "Valider", class: "btn btn-primary" %>
     <% end %>
   </div>
-<% @parking_spaces.each_with_index do | parking_space, index|  %>
-  <p>Place n°<%= index + 1 %></p>
-    <% booking = parking_space.bookings.select {|booking| booking.date == @search } %>
-    <% if booking == [] %>
-    <p>La place est libre</p>
-
-    <%= simple_form_for [parking_space, @booking] do |f| %>
-            <%= f.input :date, as: :hidden, input_html: { value: @search} %>
-            <%= f.submit "Book Now", class: "btn button-primary" %>
+  <div class="cards">
+    <% @parking_spaces.each_with_index do | parking_space, index|  %>
+      <div class="card-trip">
+        <img src="https://source.unsplash.com/yaIFQTqnnEw/1600x900" />
+        <div class="card-trip-infos">
+          <div>
+            <h2>Place n°<%= index + 1 %></h2>
+            <% booking = parking_space.bookings.select {|booking| booking.date == @search } %>
+            <% if booking == [] %>
+            <p>La place est libre</p>
+              <%= simple_form_for [parking_space, @booking] do |f| %>
+                      <%= f.input :date, as: :hidden, input_html: { value: @search} %>
+                      <%= f.submit "Réserver", class: "btn btn-primary" %>
+              <% end %>
+            <% else %>
+            <p>Place réservée par <%= booking[0].user.first_name %> <%= booking[0].user.last_name %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
-
-    <% else %>
-    <p>La place est déjà réservée par <%= booking[0].user.first_name %></p>
-    <% end %>
-<% end %>
+  </div>
 </div>
